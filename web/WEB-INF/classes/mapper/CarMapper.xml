@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.CarMapper" >
+  <resultMap id="BaseResultMap" type="po.Car" >
+    <id column="carid" property="carid" jdbcType="INTEGER" />
+    <result column="carno" property="carno" jdbcType="VARCHAR" />
+    <result column="gpsid" property="gpsid" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="driver" property="driver" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="INTEGER" />
+    <result column="lastid" property="lastid" jdbcType="BIGINT" />
+    <result column="carstatus" property="carstatus" jdbcType="TINYINT" />
+    <result column="driverstatus" property="driverstatus" jdbcType="TINYINT" />
+    <result column="lockstatus" property="lockstatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    carid, carno, gpsid, userid, driver, mobile, created, lastid, carstatus, driverstatus, 
+    lockstatus
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.CarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from car
+    where carid = #{carid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from car
+    where carid = #{carid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.CarExample" >
+    delete from car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Car" >
+    insert into car (carid, carno, gpsid, 
+      userid, driver, mobile, 
+      created, lastid, carstatus, 
+      driverstatus, lockstatus)
+    values (#{carid,jdbcType=INTEGER}, #{carno,jdbcType=VARCHAR}, #{gpsid,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER}, #{driver,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{created,jdbcType=INTEGER}, #{lastid,jdbcType=BIGINT}, #{carstatus,jdbcType=TINYINT}, 
+      #{driverstatus,jdbcType=TINYINT}, #{lockstatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Car" >
+    insert into car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="carid != null" >
+        carid,
+      </if>
+      <if test="carno != null" >
+        carno,
+      </if>
+      <if test="gpsid != null" >
+        gpsid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="driver != null" >
+        driver,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="lastid != null" >
+        lastid,
+      </if>
+      <if test="carstatus != null" >
+        carstatus,
+      </if>
+      <if test="driverstatus != null" >
+        driverstatus,
+      </if>
+      <if test="lockstatus != null" >
+        lockstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="carid != null" >
+        #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="carno != null" >
+        #{carno,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsid != null" >
+        #{gpsid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="driver != null" >
+        #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=INTEGER},
+      </if>
+      <if test="lastid != null" >
+        #{lastid,jdbcType=BIGINT},
+      </if>
+      <if test="carstatus != null" >
+        #{carstatus,jdbcType=TINYINT},
+      </if>
+      <if test="driverstatus != null" >
+        #{driverstatus,jdbcType=TINYINT},
+      </if>
+      <if test="lockstatus != null" >
+        #{lockstatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.CarExample" resultType="java.lang.Integer" >
+    select count(*) from car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update car
+    <set >
+      <if test="record.carid != null" >
+        carid = #{record.carid,jdbcType=INTEGER},
+      </if>
+      <if test="record.carno != null" >
+        carno = #{record.carno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpsid != null" >
+        gpsid = #{record.gpsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.driver != null" >
+        driver = #{record.driver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastid != null" >
+        lastid = #{record.lastid,jdbcType=BIGINT},
+      </if>
+      <if test="record.carstatus != null" >
+        carstatus = #{record.carstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.driverstatus != null" >
+        driverstatus = #{record.driverstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.lockstatus != null" >
+        lockstatus = #{record.lockstatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update car
+    set carid = #{record.carid,jdbcType=INTEGER},
+      carno = #{record.carno,jdbcType=VARCHAR},
+      gpsid = #{record.gpsid,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=INTEGER},
+      driver = #{record.driver,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=INTEGER},
+      lastid = #{record.lastid,jdbcType=BIGINT},
+      carstatus = #{record.carstatus,jdbcType=TINYINT},
+      driverstatus = #{record.driverstatus,jdbcType=TINYINT},
+      lockstatus = #{record.lockstatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Car" >
+    update car
+    <set >
+      <if test="carno != null" >
+        carno = #{carno,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsid != null" >
+        gpsid = #{gpsid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="driver != null" >
+        driver = #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=INTEGER},
+      </if>
+      <if test="lastid != null" >
+        lastid = #{lastid,jdbcType=BIGINT},
+      </if>
+      <if test="carstatus != null" >
+        carstatus = #{carstatus,jdbcType=TINYINT},
+      </if>
+      <if test="driverstatus != null" >
+        driverstatus = #{driverstatus,jdbcType=TINYINT},
+      </if>
+      <if test="lockstatus != null" >
+        lockstatus = #{lockstatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where carid = #{carid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Car" >
+    update car
+    set carno = #{carno,jdbcType=VARCHAR},
+      gpsid = #{gpsid,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      driver = #{driver,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      created = #{created,jdbcType=INTEGER},
+      lastid = #{lastid,jdbcType=BIGINT},
+      carstatus = #{carstatus,jdbcType=TINYINT},
+      driverstatus = #{driverstatus,jdbcType=TINYINT},
+      lockstatus = #{lockstatus,jdbcType=TINYINT}
+    where carid = #{carid,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+
+
+  <!-- 分页查询数据 -->
+  <select id="getCars" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from car limit #{curRow},#{pageSize}
+  </select>
+
+  <!-- 查询所有用户总数 -->
+  <select id="getAllCarsNumbers" resultType="int">
+    select count(*) from car
+  </select>
+
+</mapper>
